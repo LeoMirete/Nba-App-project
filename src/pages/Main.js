@@ -9,6 +9,7 @@ const Main = () => {
             <div className="title">
                 <h1>NBA players</h1>
             </div>
+            <Cards />
         </main>
     );
 };
