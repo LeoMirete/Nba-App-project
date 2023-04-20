@@ -1,0 +1,37 @@
+*{
+    margin: 0;
+}
+ul {
+    list-style-type: none;
+    display: flex;
+}
+
+a {
+    text-decoration: none;
+    margin: 10px;
+}
+
+.navigation-title{
+    display: flex;
+    align-items: center;
+    background-color: #b57332;
+    height: 70px;
+}
+
+.navigation{
+    position: absolute;
+    color: white;
+    background-color: #b57332;
+}
+
+h1{
+    margin: 10px auto;
+    color: white;
+    background-color: #b57332;
+}
+
+li{
+    border: 1;
+    color: white;
+    background-color: #b57332;
+}
