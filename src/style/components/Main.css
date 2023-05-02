@@ -19,11 +19,12 @@
     background-repeat: no-repeat;
     background-color: #000000;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+    flex-direction:row-reverse;
 }
 
-.input{
+#searchPlayer{
     border-radius: 10px;
     padding: 8px;
     opacity: 0.8;

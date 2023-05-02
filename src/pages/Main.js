@@ -2,11 +2,14 @@ import Navigation from "../Components/Navigation";
 import Cards from "../Components/Cards";
 import React, { useEffect, useState } from "react";
 import "../style/components/Main.css";
+import SelectInput from "../Components/SelectInput";
 
 const Main = () => {
-    const [playerDataSliced, setPlayerDataSliced] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [value, setValue] = useState("");
+    const [originalPlayers, setOriginalPlayer] = useState([]);
+    const [filteredPlayers, setFilteredPlayers] = useState([]);
+    const [filteredPlayersWithGif, setFilteredPlayersWithGif] = useState([]);
+
+    const [inputValue, setInputValue] = useState("");
 
     useEffect(() => {
         const getPlayerData = async () => {
@@ -17,35 +20,50 @@ const Main = () => {
                         method: "GET",
                     }
                 );
-                const data = await response.json();
-                const dataSliceTemp = data.slice(0, 20);
-                setPlayerDataSliced(dataSliceTemp);
-                console.log("playerDataSliced-----", dataSliceTemp);
-                const playersNames = dataSliceTemp.map((player) => {
-                    return player.Name;
-                });
-                playersNames.forEach(async (playerName, index) => {
-                    const responseGifPlayer = await fetch(
-                        `https://api.giphy.com/v1/gifs/search?api_key=YTxcu48Q9nfb2oa666nTb5U3KZNKbZq1&q=${playerName}&limit=1&offset=0&rating=g&lang=en&fmt=json&fixed_width=200&fixed_height=200`
-                    );
-                    const gifPlayer = await responseGifPlayer.json();
-                    const urlGifPlayer = gifPlayer.data[0].images.fixed_height.url;
-                    dataSliceTemp[index].gif = urlGifPlayer;
-                    if (index === playersNames.length - 1) {
-                        setPlayerDataSliced(dataSliceTemp);
-                        setLoading(false);
-                    }
-                });
+                const playerDatas = await response.json();
+
+                setOriginalPlayer(playerDatas);
             } catch (error) {
-                console.error(error);
+                console.log(error);
             }
         };
         getPlayerData();
     }, []);
 
-    if (loading) {
-        return;
-    }
+    useEffect(() => {
+        if (originalPlayers === [] || inputValue === "") {
+            return;
+        }
+
+        const filteredPlayersTemp = originalPlayers.filter((originalPlayer) => {
+            const filteredPlayer = originalPlayer.Name.toLowerCase().includes(inputValue.toLowerCase());
+            return filteredPlayer;
+        });
+
+        const slicedAndFilteredPlayersTemp = filteredPlayersTemp.slice(0, 12);
+        setFilteredPlayers(slicedAndFilteredPlayersTemp);
+        console.log(originalPlayers);
+    }, [originalPlayers, inputValue]);
+
+    useEffect(() => {
+        const fetchGif = async (player) => {
+            const responseGifPlayer = await fetch(
+                `https://api.giphy.com/v1/gifs/search?api_key=YTxcu48Q9nfb2oa666nTb5U3KZNKbZq1&q=${player.Name}&limit=1&offset=0&rating=g&lang=en&fmt=json&fixed_width=200&fixed_height=200`
+            );
+            const gifPlayer = await responseGifPlayer.json();
+            const urlGifPlayer = gifPlayer.data[0].images.fixed_height.url;
+            return { ...player, gif: urlGifPlayer };
+        };
+
+        const fetchGifs = async () => {
+            const promises = filteredPlayers.map((player) => fetchGif(player));
+            const results = await Promise.all(promises);
+            setFilteredPlayersWithGif(results);
+        };
+
+        fetchGifs();
+    }, [filteredPlayers]);
+
     return (
         <main>
             <Navigation />
@@ -55,11 +73,12 @@ const Main = () => {
                     id="searchPlayer"
                     className="input"
                     placeholder="search a player"
-                    onChange={(e) => setValue(e.target.value)}
+                    onChange={(e) => setInputValue(e.target.value)}
                 />
+                <SelectInput />
             </div>
             <div className="cards">
-                {playerDataSliced.map((player, index) => {
+                {filteredPlayersWithGif.map((player, index) => {
                     return <Cards key={index} player={player} />;
                 })}
             </div>

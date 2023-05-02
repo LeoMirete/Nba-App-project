@@ -1,10 +1,6 @@
 *{
     margin: 0;
 }
-ul {
-    list-style-type: none;
-    display: flex;
-}
 
 a {
     text-decoration: none;
@@ -22,6 +18,8 @@ a {
     position: absolute;
     color: white;
     background-color: #b57332;
+    list-style-type: none;
+    display: flex;
 }
 
 h1{
@@ -30,7 +28,7 @@ h1{
     background-color: #b57332;
 }
 
-li{
+.navigation li{
     border: 1;
     color: white;
     background-color: #b57332;
