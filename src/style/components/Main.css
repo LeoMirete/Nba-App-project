@@ -1,15 +1,12 @@
-
-
-*{
-    background-color: #cfc5bb;
+body{
+    background-color: black;
 }
-
 
 .cards{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    background-color: #9f9f9f;
+    background-color: hsl(0, 0%, 0%);
 }
 
 .search{

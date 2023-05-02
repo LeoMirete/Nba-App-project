@@ -2,14 +2,13 @@ import Navigation from "../Components/Navigation";
 import Cards from "../Components/Cards";
 import React, { useEffect, useState } from "react";
 import "../style/components/Main.css";
-import SelectInput from "../Components/SelectInput";
 
 const Main = () => {
     const [originalPlayers, setOriginalPlayer] = useState([]);
     const [filteredPlayers, setFilteredPlayers] = useState([]);
     const [filteredPlayersWithGif, setFilteredPlayersWithGif] = useState([]);
 
-    const [inputValue, setInputValue] = useState("");
+    const [inputValue, setInputValue] = useState("a");
 
     useEffect(() => {
         const getPlayerData = async () => {
@@ -75,7 +74,6 @@ const Main = () => {
                     placeholder="search a player"
                     onChange={(e) => setInputValue(e.target.value)}
                 />
-                <SelectInput />
             </div>
             <div className="cards">
                 {filteredPlayersWithGif.map((player, index) => {
