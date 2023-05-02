@@ -5,7 +5,7 @@ const Cards = ({ player, index }) => {
     console.log(player.gif);
     return (
         <div className="card">
-            <div className="title">
+            <div className="header">
                 <h3>{player.Name}</h3>
                 <h4>{player.Position}</h4>
                 <h4>{player.Team}</h4>
@@ -21,9 +21,6 @@ const Cards = ({ player, index }) => {
                 <p className="games">Games : {player.Games}</p>
                 <p className="minutes">Minutes : {Math.round((player.Minutes / player.Games) * 10) / 10}</p>
             </div>
-            <button className="favoris">
-                <i>&#9733;</i>
-            </button>
         </div>
     );
 };

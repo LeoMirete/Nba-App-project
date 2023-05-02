@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap');
+
+
+
 *{
     margin: 0;
 }
@@ -26,6 +30,7 @@ h1{
     margin: 10px auto;
     color: white;
     background-color: #b57332;
+    font-family: 'Dancing Script', cursive;
 }
 
 .navigation li{
